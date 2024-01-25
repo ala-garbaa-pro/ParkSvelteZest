@@ -1,0 +1,4 @@
+{
+  "title": "Over deze app",
+  "text": "<p>Dit is een <a href=\"https://kit.svelte.dev\">SvelteKit</a>-app. U kunt uw eigen app maken door het volgende in uw opdrachtregel in te voeren en de instructies te volgen:</p><pre>npm init svelte@next</pre><p>De pagina die u bekijkt, is puur statische HTML en vereist geen client-side interactiviteit. Daarom hoeven we geen JavaScript te laden. Probeer de broncode van de pagina te bekijken of open het devtools-netwerkvenster en vernieuw de pagina.</p>"
+}
