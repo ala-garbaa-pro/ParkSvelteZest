@@ -1,0 +1,7 @@
+{
+  "language": "Langue",
+  "booking": "Réservation",
+  "home": "Accueil",
+  "about": "À propos de nous",
+  "notification": "{{count:gt; 0:Vous avez {{count}} {{count:gte; 1:nouveau message; 2:nouveaux messages; 5:nouveaux messages}}!; default:Vous n'avez aucun message...}}"
+}
