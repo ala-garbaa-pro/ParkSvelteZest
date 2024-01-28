@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { wccDashboardPath, wccProfilePath } from '$lib/constants';
 	import LogoComponent from '$lib/ui/common/LogoComponent.svelte';
+	import { fly } from 'svelte/transition';
 
 	export let data;
 
 	const { base64Image } = data;
 
+	let isDropdownMenuOpen = false;
 </script>
-
 
 <div class="min-h-full">
 	<nav class="bg-white border-b border-gray-200">
@@ -76,56 +77,47 @@
 								id="user-menu-button"
 								aria-expanded="false"
 								aria-haspopup="true"
+								on:click={() => (isDropdownMenuOpen = !isDropdownMenuOpen)}
 							>
 								<span class="sr-only">Open user menu</span>
-								<img
-									class="w-8 h-8 rounded-full"
-									src={base64Image}
-									alt="Avatar"
-								/>
+								<img class="w-8 h-8 rounded-full" src={base64Image} alt="Avatar" />
 							</button>
 						</div>
 
-						<!--
-                Dropdown menu, show/hide based on menu state.
-  
-                Entering: "transition ease-out duration-200"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->
-						<div
-							class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-							role="menu"
-							aria-orientation="vertical"
-							aria-labelledby="user-menu-button"
-							tabindex="-1"
-						>
-							<!-- Active: "bg-gray-100", Not Active: "" -->
-							<a
-								href={wccProfilePath}
-								class="block px-4 py-2 text-sm text-gray-700"
-								role="menuitem"
+						{#if isDropdownMenuOpen}
+							<div
+								class={`transform absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+								in:fly={{ y: 25, duration: 500 }}
+								out:fly={{ y: 12, duration: 500 }}
+								role="menu"
+								aria-orientation="vertical"
+								aria-labelledby="user-menu-button"
 								tabindex="-1"
-								id="user-menu-item-0">Your Profile</a
 							>
-							<a
-								href="/"
-								class="block px-4 py-2 text-sm text-gray-700"
-								role="menuitem"
-								tabindex="-1"
-								id="user-menu-item-1">Settings</a
-							>
-							<a
-								href="/"
-								class="block px-4 py-2 text-sm text-gray-700"
-								role="menuitem"
-								tabindex="-1"
-								id="user-menu-item-2">Sign out</a
-							>
-						</div>
+								<!-- Active: "bg-gray-100", Not Active: "" -->
+								<a
+									href={wccProfilePath}
+									class="block px-4 py-2 text-sm text-gray-700"
+									role="menuitem"
+									tabindex="-1"
+									id="user-menu-item-0">Your Profile</a
+								>
+								<a
+									href="/"
+									class="block px-4 py-2 text-sm text-gray-700"
+									role="menuitem"
+									tabindex="-1"
+									id="user-menu-item-1">Settings</a
+								>
+								<a
+									href="/"
+									class="block px-4 py-2 text-sm text-gray-700"
+									role="menuitem"
+									tabindex="-1"
+									id="user-menu-item-2">Sign out</a
+								>
+							</div>
+						{/if}
 					</div>
 				</div>
 				<div class="flex items-center -mr-2 sm:hidden">
@@ -196,11 +188,7 @@
 			<div class="pt-4 pb-3 border-t border-gray-200">
 				<div class="flex items-center px-4">
 					<div class="flex-shrink-0">
-						<img
-							class="w-10 h-10 rounded-full"
-							src={base64Image}
-							alt="Avatar"
-						/>
+						<img class="w-10 h-10 rounded-full" src={base64Image} alt="Avatar" />
 					</div>
 					<div class="ml-3">
 						<div class="text-base font-medium text-gray-800">Tom Cook</div>
