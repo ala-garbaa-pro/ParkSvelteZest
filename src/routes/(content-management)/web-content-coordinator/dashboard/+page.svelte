@@ -8,6 +8,13 @@
 	export let data;
 
 	const { pages } = data;
+	let selectedPage = pages[0].name ?? '';
+
+	// Function to handle changes in the select input
+	function handleChange(event: Event) {
+		// Cast the event.target.value to a string or the type that matches your data
+		selectedPage = (event.target as HTMLSelectElement).value;
+	}
 </script>
 
 <MainLayout>
@@ -22,35 +29,41 @@
 			<select
 				id="tabs"
 				name="tabs"
+				bind:value={selectedPage}
+				on:change={handleChange}
 				class="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
 			>
-				<option>My Account</option>
-				<option>Company</option>
-				<option selected>Team Members</option>
-				<option>Billing</option>
+				{#each pages as page}
+					{#if selectedPage === page.name}
+						<option value={page.name} selected>{page.name}</option>
+					{:else}
+						<option value={page.name}>{page.name}</option>
+					{/if}
+				{/each}
 			</select>
 		</div>
 		<div class="hidden sm:block">
 			<div class="border-b border-gray-200">
 				<nav class="flex -mb-px space-x-8" aria-label="Tabs">
 					<!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-					<a href="#" class={activeTabStyle} aria-current="page">Team Members</a>
-
-					<a href="#" class={normalTabStyle}>My Account</a>
-					<a
-						href="#"
-						class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap"
-						>Company</a
-					>
-
-					<a
-						href="#"
-						class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap"
-						>Billing</a
-					>
+					{#each pages as page}
+						{#if selectedPage === page.name}
+							<button class={activeTabStyle} aria-current="page">{page.name}</button>
+						{:else}
+							<button
+								on:click={() => (selectedPage = page.name)}
+								class={normalTabStyle}
+								aria-current="page">{page.name}</button
+							>
+						{/if}
+					{/each}
 				</nav>
 			</div>
 		</div>
+	</div>
+
+	<div>
+		Selected page: [{selectedPage}]
 	</div>
 
 	<div class="pt-6 space-y-10 divide-y divide-gray-900/10">
