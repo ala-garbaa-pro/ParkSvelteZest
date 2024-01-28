@@ -1,18 +1,65 @@
 <script lang="ts">
 	import MainLayout from './ui/MainLayout.svelte';
+	const normalTabStyle =
+		'px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap';
+	const activeTabStyle =
+		'px-1 py-4 text-sm font-medium text-blue-600 border-b-2 border-blue-500 whitespace-nowrap';
+
+	export let data;
+
+	const { pages } = data;
 </script>
 
 <MainLayout>
 	<h1 slot="title" class="text-3xl font-bold leading-tight tracking-tight text-gray-900">
-		Dashboard
+		Edit Page Contents
 	</h1>
+
+	<div>
+		<div class="sm:hidden">
+			<label for="tabs" class="sr-only">Select a tab</label>
+			<!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+			<select
+				id="tabs"
+				name="tabs"
+				class="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+			>
+				<option>My Account</option>
+				<option>Company</option>
+				<option selected>Team Members</option>
+				<option>Billing</option>
+			</select>
+		</div>
+		<div class="hidden sm:block">
+			<div class="border-b border-gray-200">
+				<nav class="flex -mb-px space-x-8" aria-label="Tabs">
+					<!-- Current: "border-blue-500 text-blue-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+					<a href="#" class={activeTabStyle} aria-current="page">Team Members</a>
+
+					<a href="#" class={normalTabStyle}>My Account</a>
+					<a
+						href="#"
+						class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap"
+						>Company</a
+					>
+
+					<a
+						href="#"
+						class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 whitespace-nowrap"
+						>Billing</a
+					>
+				</nav>
+			</div>
+		</div>
+	</div>
 
 	<div class="pt-6 space-y-10 divide-y divide-gray-900/10">
 		<div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
 			<div class="px-4 sm:px-0">
-				<h2 class="text-base font-semibold leading-7 text-gray-900">Website Info</h2>
+				<h2 class="text-base font-semibold leading-7 text-gray-900">Website information</h2>
 				<p class="mt-1 text-sm leading-6 text-gray-600">
-					The following parking information will be publicly displayed, so exercise caution when sharing details.
+					The following parking information will be publicly displayed, so exercise caution when
+					sharing details.
 				</p>
 			</div>
 
