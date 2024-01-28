@@ -63,7 +63,7 @@
 	</div>
 
 	<div>
-		Selected page: [{selectedPage}]
+		Selected page is: [{selectedPage}]
 	</div>
 
 	<div class="pt-6 space-y-10 divide-y divide-gray-900/10">
