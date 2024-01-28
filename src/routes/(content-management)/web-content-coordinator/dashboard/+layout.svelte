@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { wccDashboardPath, wccProfilePath } from '$lib/constants';
 	import LogoComponent from '$lib/ui/common/LogoComponent.svelte';
+
+	export let data;
+
+	const { base64Image } = data;
+
 </script>
+
 
 <div class="min-h-full">
 	<nav class="bg-white border-b border-gray-200">
@@ -74,8 +80,8 @@
 								<span class="sr-only">Open user menu</span>
 								<img
 									class="w-8 h-8 rounded-full"
-									src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-									alt=""
+									src={base64Image}
+									alt="Avatar"
 								/>
 							</button>
 						</div>
@@ -192,8 +198,8 @@
 					<div class="flex-shrink-0">
 						<img
 							class="w-10 h-10 rounded-full"
-							src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-							alt=""
+							src={base64Image}
+							alt="Avatar"
 						/>
 					</div>
 					<div class="ml-3">

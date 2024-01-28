@@ -1,9 +1,15 @@
 <script lang="ts">
 	import MainLayout from '../ui/MainLayout.svelte';
+
+	export let data;
+
+	const { name } = data.user;
 </script>
 
 <MainLayout>
-	<h1 slot="title" class="text-3xl font-bold leading-tight tracking-tight text-gray-900">Pro</h1>
+	<h1 slot="title" class="text-3xl font-bold leading-tight tracking-tight text-gray-900">
+		Hello, {name}
+	</h1>
 
 	<div class="pt-16 mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
 		<aside
