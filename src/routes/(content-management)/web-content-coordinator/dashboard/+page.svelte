@@ -66,6 +66,8 @@
 		Selected page is: [{selectedPage}]
 	</div>
 
+	TODO: multi lang
+
 	<div class="pt-6 space-y-10 divide-y divide-gray-900/10">
 		<div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
 			<div class="px-4 sm:px-0">
