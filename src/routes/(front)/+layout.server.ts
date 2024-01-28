@@ -12,7 +12,7 @@ export const load: ServerLoad = async ({ url, cookies }) => {
   const initLocale = searchParams.get('lang') || cookies.get('locale') || defaultLocale;
   console.log("🚀 ~ file: +layout.server.ts:34 ~ constload:ServerLoad= ~ initLocale:", initLocale)
 
-  cookies.set('locale', initLocale);
+  cookies.set('locale', initLocale, { path: '/' });
 
   await loadTranslations(initLocale, pathname); // keep this just before the `return`
 

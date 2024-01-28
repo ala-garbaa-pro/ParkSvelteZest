@@ -1,0 +1,1 @@
+<input type="checkbox" /> Internationalize the page "/web-content-coordinator."

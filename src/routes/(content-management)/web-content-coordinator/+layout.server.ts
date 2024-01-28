@@ -1,0 +1,29 @@
+import type { PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
+import { wccDashboardPath, wccPath } from '$lib/constants';
+
+export const load: PageServerLoad = async ({ locals: { pb, user }, url }) => {
+	console.log(`🟩 /web-content-coordinator/+page.server.ts -> load`);
+
+	console.log(url.pathname);
+
+	if (user) {
+		const isValid = pb.authStore.isValid;
+		console.log("🚀 ~ constload:PageServerLoad= ~ isValid:", isValid)
+		const verified = user.verified;
+		console.log("🚀 ~ constload:PageServerLoad= ~ verified:", verified)
+
+
+		if (!isValid || !verified) {
+			if (url.pathname !== wccPath) {
+				throw redirect(303, wccPath);
+			}
+		} else {
+			if (url.pathname === wccPath) {
+				throw redirect(303, wccDashboardPath);
+			}
+
+		}
+	}
+};
+
