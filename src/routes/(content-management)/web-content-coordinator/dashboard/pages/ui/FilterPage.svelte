@@ -198,7 +198,9 @@
 		</div>
 	</div>
 {:else}
-	
+	<p>
+		
+	</p>
 
 	{#if $isPageStoreLoading}
 		<div class="w-full max-w-sm p-4 mt-4 border border-blue-300 rounded-md shadow">
