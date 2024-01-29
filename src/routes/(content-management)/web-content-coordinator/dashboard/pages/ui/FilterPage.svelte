@@ -199,7 +199,7 @@
 	</div>
 {:else}
 	<p>
-		
+		nothing found try to
 	</p>
 
 	{#if $isPageStoreLoading}
