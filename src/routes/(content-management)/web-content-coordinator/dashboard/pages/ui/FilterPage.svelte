@@ -217,6 +217,7 @@
 					<div class="space-y-3">
 						<div class="grid grid-cols-3 gap-4">
 							<div class="h-2 col-span-2 rounded bg-slate-700"></div>
+							<div class="h-2 col-span-1 rounded bg-slate-700"></div>
 						</div>
 						<div class="h-2 rounded bg-slate-700"></div>
 					</div>
