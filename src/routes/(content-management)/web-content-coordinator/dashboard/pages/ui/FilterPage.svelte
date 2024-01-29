@@ -198,16 +198,7 @@
 		</div>
 	</div>
 {:else}
-	<p>
-		nothing found try to<button
-			disabled={$isPageStoreLoading}
-			on:click={() => doClear()}
-			class="bg-transparent min-w-fit hover:bg-transparent btn-clear-search"
-			class:btn-disabled={$isPageStoreLoading}
-		>
-			<u>clear filter</u>
-		</button>
-	</p>
+	
 
 	{#if $isPageStoreLoading}
 		<div class="w-full max-w-sm p-4 mt-4 border border-blue-300 rounded-md shadow">
