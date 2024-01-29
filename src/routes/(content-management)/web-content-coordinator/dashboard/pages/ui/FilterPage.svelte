@@ -213,6 +213,7 @@
 		<div class="w-full max-w-sm p-4 mt-4 border border-blue-300 rounded-md shadow">
 			<div class="flex space-x-4 animate-pulse">
 				<div class="flex-1 py-1 space-y-6">
+					<div class="h-2 rounded bg-slate-700"></div>
 					
 				</div>
 			</div>
