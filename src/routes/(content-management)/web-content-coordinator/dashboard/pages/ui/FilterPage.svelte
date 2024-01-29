@@ -212,7 +212,9 @@
 	{#if $isPageStoreLoading}
 		<div class="w-full max-w-sm p-4 mt-4 border border-blue-300 rounded-md shadow">
 			<div class="flex space-x-4 animate-pulse">
-				
+				<div class="flex-1 py-1 space-y-6">
+					
+				</div>
 			</div>
 		</div>
 	{/if}
