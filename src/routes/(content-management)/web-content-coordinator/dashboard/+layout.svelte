@@ -2,6 +2,8 @@
 	import { wccDashboardPath, wccProfilePath } from '$lib/constants';
 	import LogoComponent from '$lib/ui/common/LogoComponent.svelte';
 	import { fly } from 'svelte/transition';
+	import { wccNavigationMenu } from './data/navigation.js';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -24,26 +26,14 @@
 
 					<div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
 						<!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-						<a
-							href={wccDashboardPath}
-							class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-indigo-500"
-							aria-current="page">Dashboard</a
-						>
-						<a
-							href="/"
-							class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
-							>Team</a
-						>
-						<a
-							href="/"
-							class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
-							>Projects</a
-						>
-						<a
-							href="/"
-							class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700"
-							>Calendar</a
-						>
+						{#each wccNavigationMenu as nav}
+							<a
+								href={nav.href}
+								class:nav-menu-normal={$page.url.pathname !== nav.href}
+								class:nav-menu-active={$page.url.pathname === nav.href}
+								aria-current="page">{nav.text}</a
+							>
+						{/each}
 					</div>
 				</div>
 				<div class="hidden sm:ml-6 sm:flex sm:items-center">

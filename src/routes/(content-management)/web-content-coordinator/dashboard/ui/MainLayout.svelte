@@ -2,7 +2,7 @@
 	<header>
 		<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
 			<slot name="title"
-				><h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">
+				><h1 class="h1-page">
 					Dashboard
 				</h1></slot
 			>

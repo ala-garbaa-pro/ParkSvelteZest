@@ -2,7 +2,6 @@
 
 import type { UserType } from './lib/types/User';
 import type { Pocketbase } from 'Pocketbase';
-import { HTMLAttributes } from 'svelte';
 
 // for information about these interfaces
 declare global {
@@ -10,7 +9,6 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			lang: string
-
 			pb: Pocketbase;
 			pba: Pocketbase;
 			user: UserType;
@@ -20,10 +18,6 @@ declare global {
 	}
 }
 
-declare module 'svelte' {
-	interface HTMLAttributes<T> {
-		'on:isVisible'?: () => void;
-	}
-}
+
 
 export { };

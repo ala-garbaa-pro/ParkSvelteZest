@@ -3,14 +3,18 @@ import { PB_URL } from '$env/static/private';
 import getImageBase64 from '$lib/utils/getImageBase64';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals: { pb, user } }) => {
-	console.log(`🟩 /web-content-coordinator/dashboard/+page.server.ts -> load`);
+type Props = {
+	locals: App.Locals
+}
+
+export const load: PageServerLoad = async ({ locals: { pb, user } }: Props) => {
+	console.log(`🟩 /web-content-coordinator/dashboard/+layout.server.ts -> load`);
 
 	if (user) {
 		const isValid = pb.authStore.isValid;
-		console.log("🚀 ~ constload:PageServerLoad= ~ isValid:", isValid)
+		// console.log("🚀 ~ constload:PageServerLoad= ~ isValid:", isValid)
 		const verified = user.verified;
-		console.log("🚀 ~ constload:PageServerLoad= ~ verified:", verified)
+		// console.log("🚀 ~ constload:PageServerLoad= ~ verified:", verified)
 
 		const imageUrl = `${PB_URL}/api/files/${user.collectionId}/${user.id}/${user.avatar}`;
 
