@@ -5,3 +5,6 @@ import { writable } from 'svelte/store';
 
 export const pages = writable<Page[]>();
 export const selectedPage = writable<Page>();
+export const keywordSearchPageByName = writable<string>();
+
+export const isPageStoreLoading = writable<boolean>(false);

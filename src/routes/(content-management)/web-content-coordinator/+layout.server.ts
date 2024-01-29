@@ -2,7 +2,12 @@ import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { wccDashboardPath, wccPath } from '$lib/constants';
 
-export const load: PageServerLoad = async ({ locals: { pb, user }, url }) => {
+type Props = {
+	locals: App.Locals,
+	url: URL
+}
+
+export const load: PageServerLoad = async ({ locals: { pb, user }, url }: Props) => {
 	console.log(`🟩 /web-content-coordinator/+layout.server.ts -> load`);
 
 	// console.log(url.pathname);

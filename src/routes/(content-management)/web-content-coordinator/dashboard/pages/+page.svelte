@@ -9,7 +9,7 @@
 	export let data;
 
 	onMount(() => {
-		pages.set(data.pages);
+		pages.set(data.pages ?? []);
 	});
 </script>
 
@@ -17,11 +17,7 @@
 	<h1 slot="title" class="h1-page">Edit Page Contents</h1>
 
 	{#if $pages !== undefined}
-		{#if $pages.length > 0}
-			<FilterPage />
-		{:else}
-			<p>No page found</p>
-		{/if}
+		<FilterPage />
 	{:else}
 		<p>Load pages...</p>
 	{/if}
