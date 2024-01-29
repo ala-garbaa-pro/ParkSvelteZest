@@ -214,7 +214,9 @@
 			<div class="flex space-x-4 animate-pulse">
 				<div class="flex-1 py-1 space-y-6">
 					<div class="h-2 rounded bg-slate-700"></div>
-					
+					<div class="space-y-3">
+						
+					</div>
 				</div>
 			</div>
 		</div>
