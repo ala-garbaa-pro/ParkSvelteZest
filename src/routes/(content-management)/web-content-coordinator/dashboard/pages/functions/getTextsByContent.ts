@@ -19,7 +19,8 @@ export const getTextsByContent = async ({ contentID }: Props) => {
 
             return data
         } else {
-           
+            // Handle errors here
+            console.error('Error:', response.statusText);
         }
     } catch (error) {
         console.error('Error fetching data:', error);
