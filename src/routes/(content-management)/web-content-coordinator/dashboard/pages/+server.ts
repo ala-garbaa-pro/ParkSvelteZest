@@ -1,5 +1,6 @@
 import { doSearchPageByNameServerAction } from "./actions/doSearchPageByNameServerAction";
 import { getPageContentsByIDServerAction } from "./actions/getPageContentsByIDServerAction";
+import { getTextsByContentServerAction } from "./actions/getTextsByContentServerAction";
 
 
 type Props = {
@@ -19,6 +20,8 @@ export const POST = async ({ request, locals: { pba } }: Props) => {
 
         case "getPageContentsByID":
             return getPageContentsByIDServerAction({ pageID: requestBody.pageID, pba })
+        case "getTextsByContent":
+            return getTextsByContentServerAction({ contentID: requestBody.contentID, pba })
     }
 
 };

@@ -1,6 +1,6 @@
 export const parkingContactList = [
     {
-        title: 'Rue de Verdun 679, 1130 Bruxelles',
+        title: 'website.address',
         href: 'https://goo.gl/maps/gLFGPeDEAMNPBfjv6'
     },
     {

@@ -3,9 +3,10 @@
 <script lang="ts">
 	import MainLayout from '../ui/MainLayout.svelte';
 	import FilterPage from './ui/FilterPage.svelte';
-	import { selectedPage, pages } from '$lib/stores/pageStore';
+	import { selectedPage, pages, selectedText, selectedContent } from '$lib/stores/pageStore';
 	import { onMount } from 'svelte';
-	import FilterPageContents from './ui/FilterPageContents.svelte';
+	import FilterContents from './ui/FilterContents.svelte';
+	import FilterText from './ui/FilterText.svelte';
 
 	export let data;
 
@@ -16,18 +17,26 @@
 
 <MainLayout>
 	<h1 slot="title" class="h1-page">Edit Page Contents</h1>
-	<div class="flex space-x-16">
-		{#if $pages !== undefined}
-			<div class="flex flex-col">
-				<FilterPage />
-			</div>
-		{:else}
-			<p>Load pages...</p>
-		{/if}
+	<div class="flex flex-col">
+		<div class="flex space-x-16">
+			{#if $pages !== undefined}
+				<div class="flex flex-col">
+					<FilterPage />
+				</div>
+			{:else}
+				<p>Load pages...</p>
+			{/if}
 
-		{#if $selectedPage}
+			{#if $selectedPage}
+				<div class="flex flex-col">
+					<FilterContents />
+				</div>
+			{/if}
+		</div>
+
+		{#if $selectedContent}
 			<div class="flex flex-col">
-				<FilterPageContents />
+				<FilterText />
 			</div>
 		{/if}
 	</div>

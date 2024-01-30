@@ -1,30 +1,32 @@
-import type { Content } from "$lib/types/content.type";
+import type { Page } from "$lib/types/page.type";
 import { fail, json } from "@sveltejs/kit";
 
 
 type Props = {
-    pageID: string
+    local: string
+    parentContentKey: string
     pba: App.Locals["pba"]
 }
 
-export const getPageContentsByIDServerAction = async ({ pageID, pba }: Props) => {
-    let pagesContentsList: Content[]
+export const getPageI18n = async ({ local, parentContentKey, pba }: Props) => {
+    let pagesList: Page[]
+
 
     try {
         // If there is a search query, filter the pages based on it
         let filter = '';
-        if (pageID) {
-            // If pageID is provided, filter by name contains the pageID term
-            filter = `parentPage='${pageID}'`;
+        if (pageName) {
+            // If pageName is provided, filter by name contains the pageName term
+            filter = `name~"${pageName}"`;
         }
         console.log("🚀 ~ filter:", filter)
 
 
-        pagesContentsList = await pba.collection('contents').getFullList({
+        pagesList = await pba.collection('pages').getFullList({
             sort: '-updated',
             filter,
         });
-        console.log("🚀 ~ pagesContentsList:", pagesContentsList)
+        console.log("🚀 ~ pagesList:", pagesList)
 
         // Update the store with the new pages data
     } catch (error) {
@@ -34,5 +36,5 @@ export const getPageContentsByIDServerAction = async ({ pageID, pba }: Props) =>
         });
     }
 
-    return json(pagesContentsList);
+    return json(pagesList);
 }

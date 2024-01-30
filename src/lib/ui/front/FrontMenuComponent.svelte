@@ -26,8 +26,6 @@
 	}
 
 	const languagesList = ['English', 'Français'];
-
-	
 </script>
 
 <header class="fixed z-10 w-screen bg-white/95 backdrop-blur-sm">
@@ -62,15 +60,30 @@
 			</button>
 		</div>
 		<div class="hidden lg:flex lg:gap-x-12">
-			{#each parkingContactList as parkingContactItem}
-				<a
-					href={parkingContactItem.href}
-					rel="noopener noreferrer"
-					target="_blank"
-					class="text-sm font-semibold leading-6 text-gray-900 hover:underline"
-					>{parkingContactItem.title}</a
-				>
-			{/each}
+
+			<a
+				href={parkingContactList[0].href}
+				rel="noopener noreferrer"
+				target="_blank"
+				class="text-sm font-semibold leading-6 text-gray-900 hover:underline"
+				>{parkingContactList[0].title}</a
+			>
+
+			<a
+				href={parkingContactList[1].href}
+				rel="noopener noreferrer"
+				target="_blank"
+				class="text-sm font-semibold leading-6 text-gray-900 hover:underline"
+				>{parkingContactList[1].title}</a
+			>
+
+			<a
+				href={parkingContactList[2].href}
+				rel="noopener noreferrer"
+				target="_blank"
+				class="text-sm font-semibold leading-6 text-gray-900 hover:underline"
+				>{parkingContactList[2].title}</a
+			>
 
 			<div class="relative">
 				<button

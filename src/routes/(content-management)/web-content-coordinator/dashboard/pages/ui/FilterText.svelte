@@ -6,13 +6,13 @@
 		keywordSearchPageByName,
 		isPageStoreLoading,
 		selectedContent,
-		selectedText
+		selectedText,
+		texts
 	} from '$lib/stores/pageStore';
 	import { doSearchPageByName } from '../functions/doSearchPageByName';
 	import { fade, fly } from 'svelte/transition';
-	import type { Content } from '$lib/types/content.type';
-	import type { Page } from '$lib/types/page.type';
-	import type { Text } from '$lib/types/text.type';
+	import { onMount } from 'svelte';
+	import { getTextsByContent } from '../functions/getTextsByContent';
 
 	let searchInputValue: string;
 
@@ -37,21 +37,27 @@
 		}
 	};
 
-	const selectPageHandler = (page: Page) => {
-		if ($isPageStoreLoading) return;
-
-		let emptyContents: Content;
-		selectedContent.update(() => emptyContents);
-
-		let emptyText: Text;
-		selectedText.update(() => emptyText);
-
-		selectedPage.set(page);
+	const getTextsBySelectedPageContents = async () => {
+		if ($selectedContent) {
+			if ($isPageStoreLoading) return;
+			isPageStoreLoading.set(true);
+			const pageContentsTexts = await getTextsByContent({ contentID: $selectedContent.id });
+			texts.set(pageContentsTexts);
+			isPageStoreLoading.set(false);
+		}
 	};
+
+	onMount(() => {
+		getTextsBySelectedPageContents();
+	});
+
+	$: if ($selectedContent) {
+		getTextsBySelectedPageContents();
+	}
 </script>
 
 <ul class="mt-10">
-	<label for="search-page" class="label-action">Search a page</label>
+	<label for="search-page" class="label-action">Search a page contents</label>
 	<div class="w-full">
 		<div class="flex mt-2">
 			<input
@@ -61,7 +67,7 @@
 				spellcheck="false"
 				bind:value={searchInputValue}
 				class="input-search"
-				placeholder="e.g., home"
+				placeholder="e.g., address"
 				aria-describedby="search-page-description"
 				on:keyup={handleEnterKeyPress}
 				disabled={$isPageStoreLoading}
@@ -121,70 +127,66 @@
 	</div>
 </ul>
 
-{#if $pages.length > 0}
+{#if $texts && $texts.length > 0}
 	<div class="flex flex-col">
 		<div class="mt-8">
-			{#if $selectedPage && $selectedPage.id}
-				<h2 class="leading-6 text-gray-900 text-md">
-					The page '<b>{$selectedPage.name}</b>' is selected
-				</h2>
-			{:else}
-				<h2 class="leading-6 text-gray-900 text-md">Nothing selected</h2>
-			{/if}
-
 			<ul
 				role="list"
 				class:pointer-events-none={$isPageStoreLoading}
 				class:user-select-none={$isPageStoreLoading}
 				class="relative w-full p-4 my-4 space-y-4 overflow-y-scroll divide-y divide-gray-100 shadow-md ring-1 ring-slate-100 max-h-96"
 			>
-				{#each $pages as page (page.id)}
-					<div>
-						<button
-							on:click={() => selectPageHandler(page)}
-							class:ring-2={$selectedPage && $selectedPage.id === page.id}
-							class:ring-slate-400={$selectedPage && $selectedPage.id === page.id}
-							class="flex items-center justify-between w-full p-4 py-5 rounded-md shadow-md cursor-pointer ring-1 ring-slate-200 gap-x-6 hover:bg-slate-50"
-						>
-							<div class="min-w-0">
-								<div class="flex items-start gap-x-3">
-									<p class="text-sm font-semibold leading-6 text-gray-900">{page.name}</p>
-								</div>
-								<div class="flex mt-1 text-xs leading-5 text-gray-500 gap-x-2">
-									<div class="flex flex-col text-left">
-										<p class="whitespace-nowrap">
-											Created at <time datetime={page.created}>{formatDateTime(page.created)}</time>
-										</p>
-										{#if page.created !== page.updated}
-											<p class="whitespace-nowrap">
-												Updated at <time datetime={page.created}
-													>{formatDateTime(page.updated)}</time
-												>
-											</p>
-										{/if}
+				{#each $texts as text (text.id)}
+					<label for={`${$selectedContent.key}-${text.lang}`} class="label-action"
+						>{$selectedContent.key} [{text.lang}]</label
+					>
 
-										<p class="whitespace-nowrap">
-											#{page.id}
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="flex flex-none gap-x-4">
-								<div class="relative flex-none">
-									<svg
-										class="flex-none w-5 h-5 text-slate-400"
-										viewBox="0 0 20 20"
+					<div class="flex my-2">
+						<input
+							type="text"
+							id={`${$selectedContent.key}-${text.lang}`}
+							spellcheck="false"
+							value={text.value}
+							class="input-search"
+							placeholder="e.g., address"
+							aria-describedby="single text page content"
+							disabled={$isPageStoreLoading}
+						/>
+
+						<button
+							disabled={$isPageStoreLoading}
+							on:click={() => doSearch(searchInputValue)}
+							class=" btn-search"
+							class:btn-disabled={$isPageStoreLoading}
+						>
+							{#if !$isPageStoreLoading}
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+									<title>Save text</title>
+									<path
 										fill="currentColor"
-										aria-hidden="true"
-									>
-										<path
-											fill-rule="evenodd"
-											d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-											clip-rule="evenodd"
-										/>
-									</svg>
-								</div>
-							</div>
+										d="M17 3H5C3.9 3 3 3.9 3 5V19C3 20.11 3.9 21 5 21H11.81C11.42 20.34 11.17 19.6 11.07 18.84C9.5 18.31 8.66 16.6 9.2 15.03C9.61 13.83 10.73 13 12 13C12.44 13 12.88 13.1 13.28 13.29C15.57 11.5 18.83 11.59 21 13.54V7L17 3M15 9H5V5H15V9M15.75 21L13 18L14.16 16.84L15.75 18.43L19.34 14.84L20.5 16.25L15.75 21"
+									/>
+								</svg>
+							{:else}
+								<svg
+									aria-hidden="true"
+									role="status"
+									class="items-center justify-center inline w-3 h-3 mb-2 text-white animate-spin"
+									viewBox="0 0 100 101"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<title>Loading...</title>
+									<path
+										d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+										fill="#E5E7EB"
+									/>
+									<path
+										d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+										fill="currentColor"
+									/>
+								</svg>
+							{/if}
 						</button>
 					</div>
 				{/each}

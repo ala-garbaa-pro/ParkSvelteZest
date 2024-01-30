@@ -4,10 +4,17 @@
 		selectedPage,
 		pages,
 		keywordSearchPageByName,
-		isPageStoreLoading
+		isPageStoreLoading,
+		contents,
+		selectedContent,
+		selectedText
 	} from '$lib/stores/pageStore';
 	import { doSearchPageByName } from '../functions/doSearchPageByName';
 	import { fade, fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { getPageContentsByID } from '../functions/getPageContentsByID';
+	import type { Content } from '$lib/types/content.type';
+	import type { Text } from '$lib/types/text.type';
 
 	let searchInputValue: string;
 
@@ -31,6 +38,33 @@
 			doSearch(searchInputValue);
 		}
 	};
+
+	const getPageContentsBySelectedPage = async () => {
+		if ($selectedPage) {
+			if ($isPageStoreLoading) return;
+			isPageStoreLoading.set(true);
+			const pageContents = await getPageContentsByID({ pageID: $selectedPage.id });
+			contents.set(pageContents);
+			isPageStoreLoading.set(false);
+		}
+	};
+
+	const selectContentHandler = (content: Content) => {
+		if ($isPageStoreLoading) return;
+
+		let emptyText: Text;
+		selectedText.update(() => emptyText);
+
+		selectedContent.set(content);
+	};
+
+	onMount(() => {
+		getPageContentsBySelectedPage();
+	});
+
+	$: if ($selectedPage) {
+		getPageContentsBySelectedPage();
+	}
 </script>
 
 <ul class="mt-10">
@@ -44,7 +78,7 @@
 				spellcheck="false"
 				bind:value={searchInputValue}
 				class="input-search"
-				placeholder="e.g., home"
+				placeholder="e.g., address"
 				aria-describedby="search-page-description"
 				on:keyup={handleEnterKeyPress}
 				disabled={$isPageStoreLoading}
@@ -104,12 +138,12 @@
 	</div>
 </ul>
 
-{#if $pages.length > 0}
+{#if $contents && $contents.length > 0}
 	<div class="flex flex-col">
 		<div class="mt-8">
-			{#if $selectedPage && $selectedPage.id}
+			{#if $selectedContent && $selectedContent.id}
 				<h2 class="leading-6 text-gray-900 text-md">
-					The page '<b>{$selectedPage.name}</b>' is selected
+					The page content '<b>{$selectedContent.key}</b>' is selected
 				</h2>
 			{:else}
 				<h2 class="leading-6 text-gray-900 text-md">Nothing selected</h2>
@@ -121,31 +155,35 @@
 				class:user-select-none={$isPageStoreLoading}
 				class="relative w-full p-4 my-4 space-y-4 overflow-y-scroll divide-y divide-gray-100 shadow-md ring-1 ring-slate-100 max-h-96"
 			>
-				{#each $pages as page (page.id)}
+				{#each $contents as content (content.id)}
 					<div>
 						<button
-							on:click={() => {
-								if ($isPageStoreLoading) return;
-								selectedPage.set(page);
-							}}
-							class:ring-2={$selectedPage && $selectedPage.id === page.id}
-							class:ring-slate-400={$selectedPage && $selectedPage.id === page.id}
+							on:click={() => selectContentHandler(content)}
+							class:ring-2={$selectedPage && $selectedPage.id === content.id}
+							class:ring-slate-400={$selectedPage && $selectedPage.id === content.id}
 							class="flex items-center justify-between w-full p-4 py-5 rounded-md shadow-md cursor-pointer ring-1 ring-slate-200 gap-x-6 hover:bg-slate-50"
 						>
 							<div class="min-w-0">
 								<div class="flex items-start gap-x-3">
-									<p class="text-sm font-semibold leading-6 text-gray-900">{page.name}</p>
+									<p class="text-sm font-semibold leading-6 text-gray-900">{content.key}</p>
 								</div>
 								<div class="flex mt-1 text-xs leading-5 text-gray-500 gap-x-2">
 									<div class="flex flex-col text-left">
 										<p class="whitespace-nowrap">
-											Created at <time datetime={page.created}>{formatDateTime(page.created)}</time>
+											Created at <time datetime={content.created}
+												>{formatDateTime(content.created)}</time
+											>
 										</p>
+
+										{#if content.created !== content.updated}
+											<p class="whitespace-nowrap">
+												Updated at <time datetime={content.created}
+													>{formatDateTime(content.updated)}</time
+												>
+											</p>
+										{/if}
 										<p class="whitespace-nowrap">
-											Updated at <time datetime={page.created}>{formatDateTime(page.updated)}</time>
-										</p>
-										<p class="whitespace-nowrap">
-											#{page.id}
+											#{content.id}
 										</p>
 									</div>
 								</div>
