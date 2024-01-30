@@ -1,17 +1,17 @@
 import { wccPagesPath } from "$lib/constants";
 
 type Props = {
-    pageName: string
+    pageID: string
 }
 
-export const doSearchPageByName = async ({ pageName }: Props) => {
+export const getPageContentsByID = async ({ pageID }: Props) => {
     try {
         const response = await fetch(`${wccPagesPath}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ action: "doSearchPageByName", pageName }),
+            body: JSON.stringify({ action: "getPageContentsByID", pageID }),
         });
 
         if (response.ok) {
