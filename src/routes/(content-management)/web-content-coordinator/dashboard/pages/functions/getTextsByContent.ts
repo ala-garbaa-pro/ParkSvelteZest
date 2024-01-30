@@ -15,7 +15,9 @@ export const getTextsByContent = async ({ contentID }: Props) => {
         });
 
         if (response.ok) {
-          
+            const data = await response.json();
+
+            return data
         } else {
             // Handle errors here
             console.error('Error:', response.statusText);
