@@ -6,14 +6,7 @@ type Props = {
 
 export const getTextsByContent = async ({ contentID }: Props) => {
     try {
-        const response = await fetch(`${wccPagesPath}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ action: "getTextsByContent", contentID }),
-        });
-
+       
         if (response.ok) {
             const data = await response.json();
 
