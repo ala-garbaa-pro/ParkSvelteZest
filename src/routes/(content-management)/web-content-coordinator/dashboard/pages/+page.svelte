@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import FilterContents from './ui/FilterContents.svelte';
 	import FilterText from './ui/FilterText.svelte';
+	import BatchText from './ui/BatchText.svelte';
 
 	export let data;
 
@@ -35,6 +36,9 @@
 		</div>
 
 		{#if $selectedContent}
+			<div class="flex flex-col">
+				<BatchText />
+			</div>
 			<div class="flex flex-col">
 				<FilterText />
 			</div>
