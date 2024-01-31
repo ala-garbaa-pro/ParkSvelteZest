@@ -9,6 +9,7 @@
 	import FilterText from './ui/FilterText.svelte';
 	import BatchText from './ui/BatchText.svelte';
 
+	export let data;
 
 	onMount(() => {
 		pages.set(data.pages ?? []);
