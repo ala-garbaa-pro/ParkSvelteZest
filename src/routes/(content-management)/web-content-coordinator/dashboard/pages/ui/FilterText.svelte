@@ -137,8 +137,8 @@
 				class="relative w-full p-4 my-4 space-y-4 overflow-y-scroll divide-y divide-gray-100 shadow-md ring-1 ring-slate-100 max-h-96"
 			>
 				{#each $texts as text (text.id)}
-					<label for={`${$selectedContent.key}-${text.lang}`} class="label-action"
-						>{$selectedContent.key} [{text.lang}]</label
+					<label for={`${$.key}-${text.lang}`} class="label-action"
+						>{$.key} [{text.lang}]</label
 					>
 
 					<div class="flex my-2">
