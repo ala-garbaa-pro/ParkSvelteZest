@@ -11,7 +11,6 @@
 
 	export let data;
 
-	onMount(() => {
 		pages.set(data.pages ?? []);
 	});
 </script>
