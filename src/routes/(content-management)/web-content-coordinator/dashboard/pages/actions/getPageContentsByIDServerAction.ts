@@ -17,14 +17,14 @@ export const getPageContentsByIDServerAction = async ({ pageID, pba }: Props) =>
             // If pageID is provided, filter by name contains the pageID term
             filter = `parentPage='${pageID}'`;
         }
-        console.log("🚀 ~ filter:", filter)
+        // console.log("🚀 ~ filter:", filter)
 
 
         pagesContentsList = await pba.collection('contents').getFullList({
             sort: '-updated',
             filter,
         });
-        console.log("🚀 ~ pagesContentsList:", pagesContentsList)
+        // console.log("🚀 ~ pagesContentsList:", pagesContentsList)
 
         // Update the store with the new pages data
     } catch (error) {
