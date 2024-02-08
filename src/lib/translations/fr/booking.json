@@ -1,4 +1,0 @@
-{
-  "title": "À propos de cette application",
-  "text": "<p>Il s'agit d'une application <a href=\"https://kit.svelte.dev\">SvelteKit</a>. Vous pouvez créer la vôtre en entrant la commande suivante dans votre ligne de commande et en suivant les invites :</p><pre>npm init svelte@next</pre> <p>La page que vous consultez est un HTML purement statique, sans nécessité d'interaction côté client. Pour cette raison, aucun JavaScript n'est chargé. Essayez de consulter le code source de la page ou ouvrez la fenêtre réseau des outils de développement et rechargez la page.</p>"
-}

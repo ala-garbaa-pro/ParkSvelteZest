@@ -1,7 +1,0 @@
-{
-  "language": "Taal",
-  "booking": "Reservering",
-  "home": "Startpagina",
-  "about": "Over ons",
-  "notification": "U heeft {{count:gt; 0:{{count}} nieuwe {{count; 1:bericht; default:berichten}}!; default:geen berichten...}}"
-}
